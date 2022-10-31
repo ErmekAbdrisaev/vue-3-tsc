@@ -26,6 +26,24 @@
       >
     </li>
   </ul>
+
+  <GMapMap
+    :center="center"
+    :zoom="7"
+    map-type-id="terrain"
+    style="width: 500px; height: 300px"
+  >
+    <GMapCluster>
+      <GMapMarker
+        :key="index"
+        v-for="(m, index) in markers"
+        :position="m.position"
+        :clickable="true"
+        :draggable="true"
+        @click="center = m.position"
+      />
+    </GMapCluster>
+  </GMapMap>
 </template>
 
 <script lang="ts">
@@ -33,8 +51,18 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "HelloWorld",
-  props: {
-    msg: String,
+  data() {
+    return {
+      center: { lat: 51.093048, lng: 6.84212 },
+      markers: [
+        {
+          position: {
+            lat: 51.093048,
+            lng: 6.84212,
+          },
+        }, // Along list of clusters
+      ],
+    };
   },
 });
 </script>
@@ -42,6 +70,7 @@ export default defineComponent({
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1 {
+  font-size: 1.76em;
   margin: 40px 0 0;
   color: #e2001a;
 }
@@ -50,6 +79,7 @@ ul {
   padding: 0;
 }
 li {
+  font-size: 1.4em;
   display: block;
   margin: 10px 10px;
 }
